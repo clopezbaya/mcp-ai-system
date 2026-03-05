@@ -1,0 +1,9 @@
+Título: Inicio de Sesión de Clientes
+
+Descripción:
+Como usuario del portal, quiero ingresar mis credenciales para acceder a mi perfil de cliente y realizar gestiones.
+
+Criterios de Aceptación:
+1. Validar campos obligatorios.
+2. Redirigir al Dashboard.
+3. Error si las credenciales fallan.
