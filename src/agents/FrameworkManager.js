@@ -22,7 +22,9 @@ class FrameworkManager {
   async applyChanges(repoPath, frameworkState, automationCode) {
     console.log(`[FrameworkManager] Aplicando cambios en ${repoPath}`);
     
-    const { pages, tests } = automationCode;
+    // Validar que automationCode exista y tenga las propiedades necesarias
+    const pages = automationCode?.pages || [];
+    const tests = automationCode?.tests || [];
     const structure = frameworkState.config;
     const createdFiles = [];
 
@@ -35,18 +37,22 @@ class FrameworkManager {
 
     // 2. Escribir Page Objects
     pages.forEach(page => {
-      const filePath = path.join(pagesDir, page.name);
-      fs.writeFileSync(filePath, page.content, 'utf8');
-      console.log(`[FrameworkManager] Page Object creado: ${page.name}`);
-      createdFiles.push(`${structure.pagesPath}/${page.name}`);
+      if (page && page.name && page.content) {
+        const filePath = path.join(pagesDir, page.name);
+        fs.writeFileSync(filePath, page.content, 'utf8');
+        console.log(`[FrameworkManager] Page Object creado: ${page.name}`);
+        createdFiles.push(`${structure.pagesPath}/${page.name}`);
+      }
     });
 
     // 3. Escribir Tests
     tests.forEach(test => {
-      const filePath = path.join(testsDir, test.name);
-      fs.writeFileSync(filePath, test.content, 'utf8');
-      console.log(`[FrameworkManager] Test Spec creado: ${test.name}`);
-      createdFiles.push(`${structure.testsPath}/${test.name}`);
+      if (test && test.name && test.content) {
+        const filePath = path.join(testsDir, test.name);
+        fs.writeFileSync(filePath, test.content, 'utf8');
+        console.log(`[FrameworkManager] Test Spec creado: ${test.name}`);
+        createdFiles.push(`${structure.testsPath}/${test.name}`);
+      }
     });
 
     return createdFiles;

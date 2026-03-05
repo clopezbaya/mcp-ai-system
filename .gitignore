@@ -28,3 +28,4 @@ build/
 tmp/
 temp/
 manual-test-cases/
+.env

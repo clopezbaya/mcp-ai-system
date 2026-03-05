@@ -21,10 +21,13 @@ class AutomationGenerator {
 
     let generatedCode = { pages: [], tests: [] };
     try {
-      // Intentamos extraer el JSON de la respuesta (la IA debería devolver un JSON estructurado)
+      // Intentamos extraer el JSON de la respuesta
       const jsonMatch = responseText.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
-        generatedCode = JSON.parse(jsonMatch[0]);
+        const parsed = JSON.parse(jsonMatch[0]);
+        // Garantizar estructura mínima
+        generatedCode.pages = parsed.pages || [];
+        generatedCode.tests = parsed.tests || [];
       } else {
         throw new Error('No se encontró un JSON válido en la respuesta del LLM');
       }
